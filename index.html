@@ -33,19 +33,59 @@
         const App = () => {
           // --- States for Resume Data ---
           const [personalInfo, setPersonalInfo] = useState({
-            name: '',
-            title: '',
-            email: '',
-            phone: '',
-            location: '',
-            photo: '',
-            summary: '',
+            name: 'Aarav Verma',
+            title: 'Senior Product Designer',
+            email: 'aarav.design@example.com',
+            phone: '+91-9876543210',
+            location: 'Bengaluru, India',
+            photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=200&h=200',
+            summary: 'Creative and detail-oriented Product Designer with over 5 years of experience in creating user-centric digital products. Proven ability to lead design processes, collaborate with cross-functional teams, and deliver high-quality UI/UX solutions that increased user engagement by 40%. Highly skilled in wireframing, prototyping, and modern design tools.',
           });
 
-          const [experience, setExperience] = useState([]);
-          const [education, setEducation] = useState([]);
-          const [skills, setSkills] = useState('');
-          const [projects, setProjects] = useState([]);
+          const [experience, setExperience] = useState([
+            {
+              id: 1,
+              company: 'TechInnovate Solutions',
+              role: 'Lead UI/UX Designer',
+              duration: 'Mar 2021 - Present',
+              description: 'Spearheaded the complete redesign of the core SaaS platform, improving usability scores by 35%. Managed a team of 3 junior designers and established a unified design system. Collaborated directly with stakeholders to align product goals with user needs.',
+            },
+            {
+              id: 2,
+              company: 'Creative Web Agency',
+              role: 'UI Designer',
+              duration: 'Jun 2018 - Feb 2021',
+              description: 'Designed responsive web applications for over 20+ e-commerce clients. Conducted user research and A/B testing to optimize conversion rates. Reduced user drop-off rate at checkout by 15% through streamlined UI flows.',
+            }
+          ]);
+
+          const [education, setEducation] = useState([
+            {
+              id: 1,
+              degree: 'B.Des in Interaction Design',
+              institution: 'National Institute of Design',
+              year: '2018',
+              marks: '8.5 CGPA',
+            },
+            {
+              id: 2,
+              degree: '12th Standard (Science)',
+              institution: 'Delhi Public School',
+              year: '2014',
+              marks: '92%',
+            }
+          ]);
+
+          const [skills, setSkills] = useState('Figma, Adobe XD, User Research, Wireframing, Prototyping, HTML/CSS, Interaction Design, Team Leadership, Agile Methodology');
+          
+          const [projects, setProjects] = useState([
+            {
+              id: 1,
+              title: 'FinTech Dashboard Redesign',
+              duration: '3 Months',
+              description: 'Revamped the primary analytics dashboard for a major FinTech app, introducing dark mode and modular widgets. Resulted in a 25% increase in daily active users.',
+            }
+          ]);
 
           const [template, setTemplate] = useState('modern_split'); // 'classic_ats', 'modern_split', 'creative_red', 'corporate_pro', 'minimal_grid'
           const [activeTab, setActiveTab] = useState('personal'); // Tab navigation state
@@ -777,6 +817,215 @@
             </div>
           );
 
+          // 9. Arc Studio Template (Based on Rashmi Resume 10/11 PDF - Semi-circle border)
+          const ArcTemplate = () => (
+            <div className="font-sans text-gray-800 bg-white min-h-[297mm] flex h-full">
+              {/* Left Thin Sidebar */}
+              <div className="w-[35%] p-10 border-r border-gray-100 flex flex-col items-center">
+                <div className="relative mb-8">
+                  {/* Outer Arc */}
+                  <div className="absolute -inset-4 border-l-2 border-b-2 border-slate-800 rounded-bl-full rounded-tl-full rounded-br-full transform -rotate-12 opacity-80"></div>
+                  {/* Inner Photo */}
+                  <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-lg relative z-10 bg-gray-100">
+                    {personalInfo.photo ? <img src={personalInfo.photo} alt="Profile" className="w-full h-full object-cover" /> : <div className="w-full h-full bg-slate-200"></div>}
+                  </div>
+                </div>
+
+                <div className="w-full text-left space-y-6 mt-4">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-200 pb-1 mb-3">Contact</h3>
+                    <div className="space-y-2 text-xs font-medium text-slate-600">
+                      {personalInfo.phone && <div className="flex items-center gap-2"><i className="fa-solid fa-mobile-screen w-4 text-slate-400"></i> {personalInfo.phone}</div>}
+                      {personalInfo.email && <div className="flex items-center gap-2"><i className="fa-regular fa-envelope w-4 text-slate-400"></i> <span className="break-all">{personalInfo.email}</span></div>}
+                      {personalInfo.location && <div className="flex items-center gap-2"><i className="fa-solid fa-location-dot w-4 text-slate-400"></i> {personalInfo.location}</div>}
+                    </div>
+                  </div>
+
+                  {skills && (
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-200 pb-1 mb-3">Key Skills</h3>
+                      <ul className="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                        {skills.split(',').map((s, i) => <li key={i}>{s.trim()}</li>)}
+                      </ul>
+                    </div>
+                  )}
+
+                  {education.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-200 pb-1 mb-3">Education</h3>
+                      <div className="space-y-3">
+                        {education.map((edu) => (
+                          <div key={edu.id}>
+                            <div className="font-bold text-xs text-slate-800">{edu.degree}</div>
+                            <div className="text-[10px] text-slate-500 mt-0.5">{edu.institution}</div>
+                            <div className="text-[10px] font-semibold text-slate-600 mt-0.5">{edu.year}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Main Content */}
+              <div className="w-[65%] p-10 bg-slate-50/50">
+                <div className="mb-10">
+                  <h1 className="text-4xl font-black text-slate-900 tracking-tight uppercase mb-1">{personalInfo.name || 'Your Name'}</h1>
+                  <h2 className="text-lg font-bold text-slate-500 uppercase tracking-widest">{personalInfo.title || 'Your Title'}</h2>
+                </div>
+
+                {personalInfo.summary && (
+                  <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-3 border-l-4 border-slate-800 pl-3">Profile Summary</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed text-justify">{personalInfo.summary}</p>
+                  </div>
+                )}
+
+                {experience.length > 0 && (
+                  <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-4 border-l-4 border-slate-800 pl-3">Work Experience</h3>
+                    <div className="space-y-6">
+                      {experience.map((exp) => (
+                        <div key={exp.id}>
+                          <div className="flex justify-between items-baseline mb-1">
+                            <h4 className="font-bold text-slate-800 text-sm">{exp.role}</h4>
+                            <span className="text-[10px] font-bold text-slate-500 bg-slate-200 px-2 py-0.5 rounded">{exp.duration}</span>
+                          </div>
+                          <div className="text-xs font-bold text-slate-600 mb-2">{exp.company}</div>
+                          <p className="text-xs text-slate-600 leading-relaxed">{exp.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {projects.length > 0 && (
+                  <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest mb-4 border-l-4 border-slate-800 pl-3">Projects</h3>
+                    <div className="space-y-4">
+                      {projects.map((proj) => (
+                        <div key={proj.id}>
+                          <div className="flex justify-between items-baseline mb-1">
+                            <h4 className="font-bold text-slate-800 text-sm">{proj.title}</h4>
+                            <span className="text-[10px] font-bold text-slate-500">{proj.duration}</span>
+                          </div>
+                          <p className="text-xs text-slate-600 leading-relaxed">{proj.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+
+          // 10. Pro Sidebar (Based on Rashmi Resume 1 / 8 PDF - Two column with grey sidebar)
+          const ProSidebarTemplate = () => (
+            <div className="font-sans text-gray-800 bg-white min-h-[297mm] flex h-full">
+              {/* Left Sidebar */}
+              <div className="w-[32%] bg-[#f3f4f6] p-8 flex flex-col">
+                <div className="mb-8 flex justify-center">
+                  <div className="w-36 h-36 rounded-2xl overflow-hidden border border-gray-200 shadow-sm bg-white">
+                    {personalInfo.photo ? <img src={personalInfo.photo} alt="Profile" className="w-full h-full object-cover" /> : <i className="fa-solid fa-user text-5xl text-gray-300 flex items-center justify-center h-full w-full"></i>}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-[11px] font-bold text-slate-800 uppercase tracking-widest border-b-2 border-slate-300 pb-1 mb-3">Mobile</h3>
+                    <div className="text-xs font-medium text-slate-600">{personalInfo.phone || 'N/A'}</div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-[11px] font-bold text-slate-800 uppercase tracking-widest border-b-2 border-slate-300 pb-1 mb-3">Email</h3>
+                    <div className="text-xs font-medium text-slate-600 break-all">{personalInfo.email || 'N/A'}</div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-[11px] font-bold text-slate-800 uppercase tracking-widest border-b-2 border-slate-300 pb-1 mb-3">Location</h3>
+                    <div className="text-xs font-medium text-slate-600">{personalInfo.location || 'N/A'}</div>
+                  </div>
+
+                  {skills && (
+                    <div>
+                      <h3 className="text-[11px] font-bold text-slate-800 uppercase tracking-widest border-b-2 border-slate-300 pb-1 mb-3">Key Skills</h3>
+                      <ul className="text-xs text-slate-600 space-y-1.5 list-disc list-inside font-medium">
+                        {skills.split(',').map((s, i) => <li key={i}>{s.trim()}</li>)}
+                      </ul>
+                    </div>
+                  )}
+
+                  {education.length > 0 && (
+                    <div>
+                      <h3 className="text-[11px] font-bold text-slate-800 uppercase tracking-widest border-b-2 border-slate-300 pb-1 mb-3">Education</h3>
+                      <div className="space-y-3">
+                        {education.map((edu) => (
+                          <div key={edu.id}>
+                            <div className="font-bold text-xs text-slate-800">{edu.degree}</div>
+                            <div className="text-[10px] text-slate-500 mt-1">{edu.institution}</div>
+                            <div className="text-[10px] font-bold text-slate-600 mt-0.5">{edu.year}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Content */}
+              <div className="w-[68%] p-10 bg-white">
+                <header className="mb-10">
+                  <h1 className="text-4xl font-black text-slate-800 tracking-tight uppercase mb-2">{personalInfo.name || 'Your Name'}</h1>
+                  <h2 className="text-lg font-bold text-blue-600 uppercase tracking-widest">{personalInfo.title || 'Your Title'}</h2>
+                </header>
+
+                {personalInfo.summary && (
+                  <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest bg-gray-100 py-1.5 px-3 rounded mb-4">Profile Summary</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed text-justify px-1">{personalInfo.summary}</p>
+                  </div>
+                )}
+
+                {experience.length > 0 && (
+                  <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest bg-gray-100 py-1.5 px-3 rounded mb-4">Work Experience</h3>
+                    <div className="space-y-6 px-1">
+                      {experience.map((exp) => (
+                        <div key={exp.id}>
+                          <div className="flex justify-between items-center mb-1">
+                            <h4 className="font-bold text-slate-800 text-sm">{exp.role}</h4>
+                            <span className="text-[10px] font-bold text-slate-500">{exp.duration}</span>
+                          </div>
+                          <div className="text-xs font-bold text-blue-600 mb-2">{exp.company}</div>
+                          <ul className="list-disc list-outside ml-4 text-xs text-slate-600 space-y-1.5 leading-relaxed">
+                            {exp.description.split('. ').map((point, i) => point && <li key={i}>{point.trim()}</li>)}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {projects.length > 0 && (
+                  <div className="mb-8">
+                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest bg-gray-100 py-1.5 px-3 rounded mb-4">Projects</h3>
+                    <div className="space-y-5 px-1">
+                      {projects.map((proj) => (
+                        <div key={proj.id}>
+                          <div className="flex justify-between items-center mb-1">
+                            <h4 className="font-bold text-slate-800 text-sm">{proj.title}</h4>
+                            <span className="text-[10px] font-bold text-slate-500">{proj.duration}</span>
+                          </div>
+                          <p className="text-xs text-slate-600 leading-relaxed mt-1">{proj.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+
           return (
             <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col md:flex-row print:bg-white print:block font-sans overflow-hidden">
               
@@ -822,7 +1071,9 @@
                         { id: 'minimal_grid', name: 'Minimal Grid', desc: 'Spacious & Modern' },
                         { id: 'timeline_view', name: 'Timeline View', desc: 'Visual Journey' },
                         { id: 'elegant_serif', name: 'Elegant Serif', desc: 'Academic/Classic' },
-                        { id: 'dark_mode', name: 'Dark Pro', desc: 'Digital Dark Theme' }
+                        { id: 'dark_mode', name: 'Dark Pro', desc: 'Digital Dark Theme' },
+                        { id: 'arc_studio', name: 'Arc Studio', desc: 'Curved Image Style' },
+                        { id: 'pro_sidebar', name: 'Pro Sidebar', desc: 'Two Column Grey' }
                       ].map((tpl) => (
                         <button 
                           key={tpl.id}
@@ -968,6 +1219,8 @@
                     {template === 'timeline_view' && <TimelineTemplate />}
                     {template === 'elegant_serif' && <ElegantTemplate />}
                     {template === 'dark_mode' && <DarkModeTemplate />}
+                    {template === 'arc_studio' && <ArcTemplate />}
+                    {template === 'pro_sidebar' && <ProSidebarTemplate />}
                   </div>
                 </div>
               </div>
